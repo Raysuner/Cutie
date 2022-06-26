@@ -1,6 +1,6 @@
 import React from 'react'
-import { FieldContext } from '../FieldContext'
-import { FieldProps, FieldsEntity, Store } from '../typings'
+import { FieldContext } from './FieldContext'
+import { FieldProps, FieldsEntity, Store } from './typings'
 
 class Field extends React.Component<FieldProps> implements FieldsEntity {
   constructor (props: FieldProps) {
@@ -22,6 +22,7 @@ class Field extends React.Component<FieldProps> implements FieldsEntity {
     namePathList: string[] | null,
     type: string
   ) {
+    console.log('onStoreChange this', this)
     const name = this.props.name!
     const prevValue = prevStore[name]
     const curValue = curStore[name]
@@ -58,11 +59,13 @@ class Field extends React.Component<FieldProps> implements FieldsEntity {
       }
       fieldContext?.formStore.setFieldValue(name!, newValue)
       const changeFunc = childProps[triggerPropName]
-      changeFunc(...args)
+      if (changeFunc) {
+        changeFunc(...args)
+      }
     }
     const controllData = {
       ...childProps,
-      [name!]: value,
+      [valuePropName]: value,
       [triggerPropName]: trigger
     }
     return controllData

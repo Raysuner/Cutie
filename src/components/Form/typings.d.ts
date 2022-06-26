@@ -10,7 +10,7 @@ export type Store = { [key: string]: any }
 export interface FieldProps {
   name?: string;
   label?: string;
-  initValue?: any;
+  initialValue?: any;
   valuePropName?: string;
   triggerPropName?: string;
   children?: React.ReactNode;

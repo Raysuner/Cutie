@@ -5,12 +5,12 @@ import { BaseForm, Store } from './typings'
 
 interface FormProps extends BaseForm {
   form?: FormStore
-  initValues?: Store
+  initialValues?: Store
   children?: React.ReactNode
 }
 
 export default function Form (props: FormProps) {
-  const { form, initValues = {}, children } = props
+  const { form, initialValues = {}, children } = props
   const formStore = useRef<FormStore>(new FormStore())
   const mountRef = useRef(false)
 
@@ -18,7 +18,7 @@ export default function Form (props: FormProps) {
   //   formStore.current = new FormStore()
   // }
   if (!mountRef.current) {
-    formStore.current.setInitialValues(initValues)
+    formStore.current.setInitialValues(initialValues)
     mountRef.current = true
   } 
 

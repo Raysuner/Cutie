@@ -1,19 +1,18 @@
-import { useState } from 'react'
 import Form from "./components/Form"
 import './App.css'
 
 function App() {
   return (
     <Form
-      initValues={{
+      initialValues={{
         username: '123',
         is_admin: true,
       }}
     >
-      <Form.Item label="用户名" name="username" initValue="345">
+      <Form.Item label="用户名" name="username" initialValue="345">
         <input type="text" />
       </Form.Item>
-      <Form.Item label="品牌" name="role" initValue="saab">
+      <Form.Item label="品牌" name="role" initialValue="saab">
         <select>
           <option value="volvo">Volvo</option>
           <option value="saab">Saab</option>

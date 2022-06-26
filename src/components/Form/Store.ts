@@ -1,16 +1,16 @@
-import { FieldsEntity, Store } from '../typings'
+import { FieldsEntity, Store } from './typings'
 
 export class FormStore {
-  private initStore = {}
+  private initialStore = {}
   private store: Store = {}
   private fieldsEntities: FieldsEntity[] = []
 
   public initFieldEntity (field: FieldsEntity) {
-    const { name, initValue } = field.props
+    const { name, initialValue } = field.props
     if (name) {
       const prevValue = this.store[name]
-      if (prevValue !== initValue) {
-        this.store = { ...this.store, [name]: initValue }
+      if (initialValue && prevValue !== initialValue) {
+        this.store = { ...this.store, [name]: initialValue }
       }
     }
   }
@@ -20,7 +20,6 @@ export class FormStore {
   }
 
   public registerFieldEntity (fieldEntity: FieldsEntity) {
-    console.log('fields', this.fieldsEntities)
     this.fieldsEntities.push(fieldEntity)
   }
 
@@ -30,8 +29,9 @@ export class FormStore {
     namePathList: string[] | null,
     type: string
   ) {
-    this.getFieldEntities().forEach(({ onStoreChange }) => {
-      onStoreChange(prevStore, curStore, namePathList, type)
+    console.log('notifyObserver')
+    this.getFieldEntities().forEach((field) => {
+      field.onStoreChange(prevStore, curStore, namePathList, type)
     })
   }
 
@@ -59,11 +59,11 @@ export class FormStore {
   }
 
   public setInitialValues (values: Store) {
-    this.initStore = values
+    this.initialStore = values
     this.store = { ...values }
   }
 
   public resetFieldsValue () {
-    this.setFieldsValue(this.initStore)
+    this.setFieldsValue(this.initialStore)
   }
 }

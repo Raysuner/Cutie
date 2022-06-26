@@ -1,5 +1,5 @@
 import { createContext } from "react";
-import { FormStore } from "../Store";
+import { FormStore } from "./Store";
 
 export interface IFieldContext {
   formStore: FormStore;
