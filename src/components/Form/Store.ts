@@ -1,69 +1,70 @@
-import { FieldsEntity, Store } from './typings'
+import { FieldsEntity, Store } from "./typings";
 
 export class FormStore {
-  private initialStore = {}
-  private store: Store = {}
-  private fieldsEntities: FieldsEntity[] = []
+  private initialStore = {};
+  private store: Store = {};
+  private fieldsEntities: FieldsEntity[] = [];
 
-  public initFieldEntity (field: FieldsEntity) {
-    const { name, initialValue } = field.props
+  public initFieldEntity(field: FieldsEntity) {
+    const { name, initialValue } = field.props;
     if (name) {
-      const prevValue = this.store[name]
+      const prevValue = this.store[name];
       if (initialValue && prevValue !== initialValue) {
-        this.store = { ...this.store, [name]: initialValue }
+        this.store = { ...this.store, [name]: initialValue };
       }
     }
   }
 
-  private getFieldEntities () {
-    return this.fieldsEntities.filter(it => it.props.name)
+  private getFieldEntities() {
+    return this.fieldsEntities.filter((it) => it.props.name);
   }
 
-  public registerFieldEntity (fieldEntity: FieldsEntity) {
-    this.fieldsEntities.push(fieldEntity)
+  public registerFieldEntity(fieldEntity: FieldsEntity) {
+    this.fieldsEntities.push(fieldEntity);
+    console.log(this.fieldsEntities);
   }
 
-  private notifyObserver (
+  private notifyObserver(
     prevStore: Store,
     curStore: Store,
     namePathList: string[] | null,
     type: string
   ) {
-    console.log('notifyObserver')
-    this.getFieldEntities().forEach((field) => {
-      field.onStoreChange(prevStore, curStore, namePathList, type)
-    })
+    // this.getFieldEntities().forEach((field) => {
+    //   field.onStoreChange(prevStore, curStore, namePathList, type);
+    // });
   }
 
-  public getFieldValue (name: string) {
-    return this.store[name]
+  public getFieldValue(name: string) {
+    return this.store[name];
   }
 
-  public getFieldsValue () {
-    return { ...this.store }
+  public getFieldsValue() {
+    return { ...this.store };
   }
 
-  public setFieldValue (name: string, value: any) {
-    const prevStore = { ...this.store }
+  public setFieldValue(name: string, value: any) {
+    const prevStore = { ...this.store };
     if (this.store[name] === value) {
-      return
+      return;
     }
-    this.store = { ...this.store, [name]: value }
-    this.notifyObserver(prevStore, this.store, [name], 'update')
+    this.store = { ...this.store, [name]: value };
+    console.log(name, value, this.store);
+    this.notifyObserver(prevStore, this.store, [name], "update");
   }
 
-  public setFieldsValue (values: Store) {
-    const prevStore = { ...this.store }
-    this.store = { ...this.store, ...values }
-    this.notifyObserver(prevStore, this.store, null, 'reset')
+  public setFieldsValue(values: Store) {
+    const prevStore = { ...this.store };
+    this.store = { ...this.store, ...values };
+    this.notifyObserver(prevStore, this.store, null, "reset");
   }
 
-  public setInitialValues (values: Store) {
-    this.initialStore = values
-    this.store = { ...values }
+  public setInitialValues(values: Store) {
+    this.initialStore = values;
+    this.store = { ...values };
   }
 
-  public resetFieldsValue () {
-    this.setFieldsValue(this.initialStore)
+  public resetFieldsValue() {
+    this.setFieldsValue(this.initialStore);
   }
 }

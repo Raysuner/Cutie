@@ -1,34 +1,32 @@
-import React, { useEffect, useRef, useMemo } from 'react'
-import { FieldContext } from './FieldContext'
-import { FormStore } from './Store'
-import { BaseForm, Store } from './typings'
+import React, { useRef, useMemo } from "react";
+import { FieldContext } from "./FieldContext";
+import { FormStore } from "./Store";
+import { BaseForm, Store } from "./typings";
 
 interface FormProps extends BaseForm {
-  form?: FormStore
-  initialValues?: Store
-  children?: React.ReactNode
+  form?: FormStore;
+  initialValues?: Store;
+  children?: React.ReactNode;
 }
 
-export default function Form (props: FormProps) {
-  const { form, initialValues = {}, children } = props
-  const formStore = useRef<FormStore>(new FormStore())
-  const mountRef = useRef(false)
+export default function Form(props: FormProps) {
+  const { form, initialValues = {}, children } = props;
+  const formStore = useRef<FormStore>(new FormStore());
+  const mountRef = useRef(false);
 
   // if (!form) {
   //   formStore.current = new FormStore()
   // }
   if (!mountRef.current) {
-    formStore.current.setInitialValues(initialValues)
-    mountRef.current = true
-  } 
+    formStore.current.setInitialValues(initialValues);
+    mountRef.current = true;
+  }
 
   const formStoreContext = useMemo(() => {
     return {
-      formStore: formStore.current
-    }
-  }, [formStore])
-
-  console.log('formStoreContext+++', formStoreContext)
+      formStore: formStore.current,
+    };
+  }, [formStore]);
 
   return (
     <form>
@@ -36,5 +34,5 @@ export default function Form (props: FormProps) {
         {children}
       </FieldContext.Provider>
     </form>
-  )
+  );
 }

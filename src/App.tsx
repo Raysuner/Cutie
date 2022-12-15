@@ -1,18 +1,18 @@
-import Form from "./components/Form"
-import './App.css'
+import Form from "./components/Form";
+import "./App.css";
 
 function App() {
   return (
     <Form
       initialValues={{
-        username: '123',
+        username: "123",
         is_admin: true,
       }}
     >
       <Form.Item label="用户名" name="username" initialValue="345">
         <input type="text" />
       </Form.Item>
-      <Form.Item label="品牌" name="role" initialValue="saab">
+      <Form.Item label="品牌" name="role">
         <select>
           <option value="volvo">Volvo</option>
           <option value="saab">Saab</option>
@@ -23,11 +23,11 @@ function App() {
       <Form.Item label="是否是管理员" name="is_admin" valuePropName="checked">
         <input type="checkbox" />
       </Form.Item>
-      <Form.Item label="备注">
-        <input />
+      <Form.Item label="备注" name="beizhu">
+        <input type="text" />
       </Form.Item>
     </Form>
   );
 }
 
-export default App
+export default App;
