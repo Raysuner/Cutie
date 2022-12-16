@@ -11,12 +11,17 @@ interface FormProps extends BaseForm {
 
 export default function Form(props: FormProps) {
   const { form, initialValues = {}, children } = props;
-  const formStore = useRef<FormStore>(new FormStore());
+  const formStore = useRef<FormStore>();
   const mountRef = useRef(false);
 
-  // if (!form) {
-  //   formStore.current = new FormStore()
-  // }
+  if (!formStore.current) {
+    if (!form) {
+      formStore.current = new FormStore();
+    } else {
+      formStore.current = form;
+    }
+  }
+
   if (!mountRef.current) {
     formStore.current.setInitialValues(initialValues);
     mountRef.current = true;
@@ -24,9 +29,9 @@ export default function Form(props: FormProps) {
 
   const formStoreContext = useMemo(() => {
     return {
-      formStore: formStore.current,
+      formStore: formStore.current!,
     };
-  }, [formStore]);
+  }, []);
 
   return (
     <form>

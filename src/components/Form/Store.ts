@@ -30,9 +30,9 @@ export class FormStore {
     namePathList: string[] | null,
     type: string
   ) {
-    // this.getFieldEntities().forEach((field) => {
-    //   field.onStoreChange(prevStore, curStore, namePathList, type);
-    // });
+    this.getFieldEntities().forEach((field) => {
+      field.onStoreChange(prevStore, curStore, namePathList, type);
+    });
   }
 
   public getFieldValue(name: string) {
