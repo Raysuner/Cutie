@@ -1,0 +1,103 @@
+@import '../../assets/style/color.less';
+
+@btn-prefix-cls: tq-btn;
+
+.btn() {
+  position: relative;
+  border-radius: 6px;
+  padding: 4px 15px;
+  font-size: 14px;
+  cursor: pointer;
+  outline: none;
+  border: 1px solid transparent;
+}
+
+.btn-default() {
+  color: @black-base;
+  background-color: #fff;
+  border-color: @default-btn-color;
+}
+
+.btn-primary() {
+  color: #fff;
+  background-color: @primary-btn-color;
+}
+
+.btn-secondary() {
+  color: @primary-btn-color;
+  background-color: #fff;
+  border-color: @primary-btn-color
+}
+
+.btn-dashed() {
+  .btn-default();
+  border-style: dashed;
+}
+
+.btn-link() {
+  color: @primary-btn-color;
+  background-color: #fff;
+  border: none;
+}
+
+.btn-text {
+  .btn-default();
+  border: none;
+}
+
+.@{btn-prefix-cls} {
+
+  .btn();
+
+  &-default {
+    .btn-default();
+  }
+
+  &-primary {
+    .btn-primary();
+  }
+
+  &-secondary {
+    .btn-secondary();
+  }
+
+  &-dashed {
+    .btn-dashed();
+  }
+
+  &-link {
+    .btn-link();
+  }
+
+  &-text {
+    .btn-text();
+  }
+
+  &-round {
+    border-radius: 32px;
+  }
+
+  &-circle {
+    border-radius: 50%;
+  }
+
+  &-disabled {
+    color: @disable-btn-color;
+    background-color: @disable-btn-bg-color;
+    border-color: @default-btn-color;
+    cursor: not-allowed;
+  }
+
+  &-block {
+    width: 100%;
+  }
+
+  &-small {
+    padding: 0 7px;
+  }
+
+  &-large {
+    font-size: 16px;
+    padding: 7px 15px;
+  }
+}
