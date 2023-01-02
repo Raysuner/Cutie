@@ -62,11 +62,7 @@ const InternalButton: React.ForwardRefRenderFunction<unknown, ButtonProps> = (
     ...restProps
   } = props;
 
-  const iconNode = loading ? (
-    <LoadingIcon notOnly={!!children && children !== 0} />
-  ) : (
-    icon
-  );
+  const iconNode = loading ? <LoadingIcon notOnlyIcon={!!children} /> : icon;
   const classString = classNames(className, prefixClassName, {
     [`${prefixClassName}-${shape}`]: shape !== 'default' && shape,
     [`${prefixClassName}-${type}`]: type,
