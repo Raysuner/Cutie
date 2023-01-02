@@ -3,10 +3,10 @@ import './LoadingIcon.less';
 import cs from 'classnames';
 
 interface LoadingIconProps {
-  notOnly?: boolean;
+  notOnlyIcon?: boolean;
 }
 
 export default function LoadingIcon(props: LoadingIconProps) {
-  const { notOnly = true } = props;
-  return <span className={cs('loading', { 'not-only': notOnly })} />;
+  const { notOnlyIcon = true } = props;
+  return <span className={cs('loading', { 'not-only-icon': notOnlyIcon })} />;
 }
