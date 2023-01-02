@@ -10,6 +10,9 @@
   cursor: pointer;
   outline: none;
   border: 1px solid transparent;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .btn-default() {
@@ -99,5 +102,10 @@
   &-large {
     font-size: 16px;
     padding: 7px 15px;
+  }
+
+  &-loading {
+    cursor: default;
+    opacity: 0.65;
   }
 }

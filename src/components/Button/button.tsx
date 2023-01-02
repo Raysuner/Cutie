@@ -1,7 +1,7 @@
 import React from 'react';
 import classNames from 'classnames';
 import LoadingIcon from './LoadingIcon';
-import './button.less';
+import './Button.less';
 
 export type ButtonType =
   | 'default'
@@ -62,11 +62,16 @@ const InternalButton: React.ForwardRefRenderFunction<unknown, ButtonProps> = (
     ...restProps
   } = props;
 
-  const iconNode = loading ? <LoadingIcon /> : icon;
+  const iconNode = loading ? (
+    <LoadingIcon notOnly={!!children && children !== 0} />
+  ) : (
+    icon
+  );
   const classString = classNames(className, prefixClassName, {
     [`${prefixClassName}-${shape}`]: shape !== 'default' && shape,
     [`${prefixClassName}-${type}`]: type,
     [`${prefixClassName}-${size}`]: size,
+    [`${prefixClassName}-loading`]: loading,
     [`${prefixClassName}-block`]: block,
     [`${prefixClassName}-disabled`]: disabled,
     [`${prefixClassName}-only-icon`]: !children && children !== 0 && !!iconNode
