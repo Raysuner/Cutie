@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import classNames from 'classnames';
+import LoadingIcon from './LoadingIcon';
 import './button.less';
 
 export type ButtonType =
@@ -21,7 +22,7 @@ export interface BaseButtonProps {
   disabled?: boolean;
   className?: string;
   block?: boolean;
-  loading?: boolean | { delay?: number };
+  loading?: boolean;
   children?: React.ReactNode;
   icon?: React.ReactNode;
 }
@@ -60,54 +61,24 @@ const InternalButton: React.ForwardRefRenderFunction<unknown, ButtonProps> = (
     htmlType = 'button' as ButtonProps['htmlType'],
     ...restProps
   } = props;
-  const [isLoading, setIsLoading] = useState<boolean | number>(
-    loading === true
-  );
 
-  const iconType = isLoading ? 'loading' : icon;
+  const iconNode = loading ? <LoadingIcon /> : icon;
   const classString = classNames(className, prefixClassName, {
     [`${prefixClassName}-${shape}`]: shape !== 'default' && shape,
     [`${prefixClassName}-${type}`]: type,
     [`${prefixClassName}-${size}`]: size,
     [`${prefixClassName}-block`]: block,
     [`${prefixClassName}-disabled`]: disabled,
-    [`${prefixClassName}-only-icon`]: !children && children !== 0 && !!iconType
+    [`${prefixClassName}-only-icon`]: !children && children !== 0 && !!iconNode
   });
 
-  let iconNode = null;
-  if (icon && !isLoading) {
-    iconNode = icon;
-  } else if (isLoading) {
-    iconNode = 'loading...';
-  }
-
   const handleClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    if (isLoading) {
+    if (loading) {
       e.preventDefault();
       return;
     }
     props?.onClick?.(e);
   };
-
-  const loadingOrDelayTime: number | boolean =
-    typeof loading === 'object' ? loading.delay || true : loading;
-
-  useEffect(() => {
-    let timer: number | null = null;
-    if (typeof loadingOrDelayTime === 'number') {
-      timer = setTimeout(() => {
-        setIsLoading(true);
-      }, loadingOrDelayTime);
-    } else {
-      setIsLoading(loadingOrDelayTime);
-    }
-    return () => {
-      if (timer) {
-        clearTimeout(timer);
-        timer = null;
-      }
-    };
-  }, [loadingOrDelayTime]);
 
   return (
     <button
