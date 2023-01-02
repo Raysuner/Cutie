@@ -1,7 +1,7 @@
-import React, { useRef, useMemo } from "react";
-import { FieldContext } from "./FieldContext";
-import { FormStore } from "./Store";
-import { BaseForm, Store } from "./typings";
+import React, { useRef, useMemo } from 'react';
+import { FieldContext } from './FieldContext';
+import { FormStore } from './Store';
+import { BaseForm, Store } from './typings';
 
 interface FormProps extends BaseForm {
   form?: FormStore;
@@ -29,7 +29,7 @@ export default function Form(props: FormProps) {
 
   const formStoreContext = useMemo(() => {
     return {
-      formStore: formStore.current!,
+      formStore: formStore.current!
     };
   }, []);
 

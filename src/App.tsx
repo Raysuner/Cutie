@@ -1,32 +1,39 @@
-import Form from "./components/Form";
-import "./App.css";
+import React from 'react';
+import Form from './components/Form';
+import Button from './components/Button';
+
+import './App.css';
 
 function App() {
   return (
-    <Form
-      initialValues={{
-        username: "123",
-        is_admin: true,
-      }}
-    >
-      <Form.Item label="用户名" name="username" initialValue="345">
-        <input type="text" />
-      </Form.Item>
-      <Form.Item label="品牌" name="role">
-        <select>
-          <option value="volvo">Volvo</option>
-          <option value="saab">Saab</option>
-          <option value="mercedes">Mercedes</option>
-          <option value="audi">Audi</option>
-        </select>
-      </Form.Item>
-      <Form.Item label="是否是管理员" name="is_admin" valuePropName="checked">
-        <input type="checkbox" />
-      </Form.Item>
-      <Form.Item label="备注" name="beizhu">
-        <input type="text" />
-      </Form.Item>
-    </Form>
+    <div>
+      <div>
+        <Button type="primary" shape="round" disabled={true}>
+          确认
+        </Button>
+      </div>
+      <div>
+        <Button
+          type="primary"
+          loading
+          onClick={() => console.log('hello world')}
+        ></Button>
+      </div>
+      <div>
+        <Button type="secondary" block>
+          确认
+        </Button>
+      </div>
+      <div>
+        <Button type="dashed">确认</Button>
+      </div>
+      <div>
+        <Button type="link">确认</Button>
+      </div>
+      <div>
+        <Button type="text">确认</Button>
+      </div>
+    </div>
   );
 }
 

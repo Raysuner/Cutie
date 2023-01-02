@@ -1,6 +1,6 @@
-import React from "react";
-import { FieldContext } from "./FieldContext";
-import { FieldProps, FieldsEntity, Store } from "./typings";
+import React from 'react';
+import { FieldContext } from './FieldContext';
+import { FieldProps, FieldsEntity, Store } from './typings';
 
 class Field extends React.Component<FieldProps> implements FieldsEntity {
   constructor(props: FieldProps) {
@@ -43,10 +43,10 @@ class Field extends React.Component<FieldProps> implements FieldsEntity {
   private getControlled(childProps: { [key: string]: any }) {
     const {
       name,
-      valuePropName = "value",
-      triggerPropName = "onChange",
+      valuePropName = 'value',
+      triggerPropName = 'onChange',
       getValueFromEvent,
-      fieldContext,
+      fieldContext
     } = this.props;
     const value = this.props.fieldContext?.formStore.getFieldValue(name!);
     const trigger = (...args: any[]) => {
@@ -65,9 +65,9 @@ class Field extends React.Component<FieldProps> implements FieldsEntity {
     const controllData = {
       ...childProps,
       [valuePropName]: value,
-      [triggerPropName]: trigger,
+      [triggerPropName]: trigger
     };
-    console.log("controllData", controllData);
+    console.log('controllData', controllData);
     return controllData;
   }
 
@@ -79,16 +79,16 @@ class Field extends React.Component<FieldProps> implements FieldsEntity {
     } else {
       node = children;
     }
-    console.log("node", node);
+    console.log('node', node);
     return node;
   }
 }
 
-export default function FieldWrapper(props: Omit<FieldProps, "fieldContext">) {
+export default function FieldWrapper(props: Omit<FieldProps, 'fieldContext'>) {
   const fieldContext = React.useContext(FieldContext);
-  console.log("fieldContext", fieldContext);
+  console.log('fieldContext', fieldContext);
   return (
-    <div style={{ display: "flex", marginBottom: 12 }}>
+    <div style={{ display: 'flex', marginBottom: 12 }}>
       <div style={{ width: 100 }}>{props.label}</div>
       <Field {...props} fieldContext={fieldContext} />
     </div>

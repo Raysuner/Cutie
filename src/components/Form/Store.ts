@@ -1,4 +1,4 @@
-import { FieldsEntity, Store } from "./typings";
+import { FieldsEntity, Store } from './typings';
 
 export class FormStore {
   private initialStore = {};
@@ -50,13 +50,13 @@ export class FormStore {
     }
     this.store = { ...this.store, [name]: value };
     console.log(name, value, this.store);
-    this.notifyObserver(prevStore, this.store, [name], "update");
+    this.notifyObserver(prevStore, this.store, [name], 'update');
   }
 
   public setFieldsValue(values: Store) {
     const prevStore = { ...this.store };
     this.store = { ...this.store, ...values };
-    this.notifyObserver(prevStore, this.store, null, "reset");
+    this.notifyObserver(prevStore, this.store, null, 'reset');
   }
 
   public setInitialValues(values: Store) {

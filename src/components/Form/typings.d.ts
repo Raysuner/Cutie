@@ -1,11 +1,11 @@
-import React from 'react'
+import React from 'react';
 import { IFieldContext } from './FieldContext';
 
 export type BaseForm = Omit<
   React.FormHTMLAttributes<HTMLFormElement>,
   'onSubmit'
->
-export type Store = { [key: string]: any }
+>;
+export type Store = { [key: string]: any };
 
 export interface FieldProps {
   name?: string;
@@ -19,6 +19,6 @@ export interface FieldProps {
 }
 
 export interface FieldsEntity {
-  onStoreChange: Function;  
-  props: FieldProps
+  onStoreChange: Function;
+  props: FieldProps;
 }
