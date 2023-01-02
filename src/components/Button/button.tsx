@@ -51,11 +51,11 @@ const InternalButton: React.ForwardRefRenderFunction<unknown, ButtonProps> = (
     className,
     icon
   } = props;
-  const [loadingState, setLoadingState] = useState<boolean | number>(
+  const [isLoading, setIsLoading] = useState<boolean | number>(
     loading === true
   );
 
-  const iconType = loadingState ? 'loading' : icon;
+  const iconType = isLoading ? 'loading' : icon;
   const classString = classNames(className, prefixClassName, {
     [`${prefixClassName}-${shape}`]: shape !== 'default' && shape,
     [`${prefixClassName}-${type}`]: type,
@@ -66,14 +66,14 @@ const InternalButton: React.ForwardRefRenderFunction<unknown, ButtonProps> = (
   });
 
   let iconNode = null;
-  if (icon && !loadingState) {
+  if (icon && !isLoading) {
     iconNode = icon;
-  } else if (loadingState) {
+  } else if (isLoading) {
     iconNode = 'loading...';
   }
 
   const handleClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    if (loadingState) {
+    if (isLoading) {
       e.preventDefault();
       return;
     }
@@ -87,10 +87,10 @@ const InternalButton: React.ForwardRefRenderFunction<unknown, ButtonProps> = (
     let timer: number | null = null;
     if (typeof loadingOrDelayTime === 'number') {
       timer = setTimeout(() => {
-        setLoadingState(loadingOrDelayTime);
+        setIsLoading(true);
       }, loadingOrDelayTime);
     } else {
-      setLoadingState(loadingOrDelayTime);
+      setIsLoading(loadingOrDelayTime);
     }
     return () => {
       if (timer) {
@@ -113,7 +113,7 @@ const InternalButton: React.ForwardRefRenderFunction<unknown, ButtonProps> = (
   );
 };
 
-const Button = React.forwardRef<unknown, BaseButtonProps>(InternalButton);
+const Button = React.forwardRef<unknown, ButtonProps>(InternalButton);
 Button.displayName = 'Button';
 
 export default Button;
