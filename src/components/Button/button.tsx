@@ -12,7 +12,7 @@ export type ButtonType =
 
 export type ButtonShape = 'default' | 'round' | 'circle';
 export type ButtonSize = 'small' | 'medium' | 'large';
-export type ButtonHtmlType = 'text' | 'submit' | 'reset';
+export type ButtonHtmlType = 'button' | 'submit' | 'reset';
 
 export interface BaseButtonProps {
   type?: ButtonType;
@@ -26,13 +26,20 @@ export interface BaseButtonProps {
   icon?: React.ReactNode;
 }
 
+export type AnchorButtonProps = {
+  href: string;
+  target?: string;
+  onClick?: React.MouseEventHandler<HTMLButtonElement>;
+} & BaseButtonProps &
+  Omit<React.AnchorHTMLAttributes<any>, 'type' | 'onClick'>;
+
 export type NativeButtonProps = {
   htmlType?: ButtonHtmlType;
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
 } & BaseButtonProps &
   Omit<React.ButtonHTMLAttributes<any>, 'type' | 'onClick'>;
 
-export type ButtonProps = Partial<NativeButtonProps>;
+export type ButtonProps = Partial<NativeButtonProps & AnchorButtonProps>;
 
 const prefixClassName = 'tq-btn';
 
@@ -41,15 +48,17 @@ const InternalButton: React.ForwardRefRenderFunction<unknown, ButtonProps> = (
   ref
 ) => {
   const {
+    className,
+    icon,
+    children,
     type = 'default',
     shape = 'default',
     size = 'medium',
     disabled = false,
     loading = false,
     block = false,
-    children,
-    className,
-    icon
+    htmlType = 'button' as ButtonProps['htmlType'],
+    ...restProps
   } = props;
   const [isLoading, setIsLoading] = useState<boolean | number>(
     loading === true
@@ -102,6 +111,8 @@ const InternalButton: React.ForwardRefRenderFunction<unknown, ButtonProps> = (
 
   return (
     <button
+      {...restProps}
+      type={htmlType}
       className={classString}
       disabled={disabled}
       onClick={handleClick}
