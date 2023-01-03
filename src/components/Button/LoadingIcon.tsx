@@ -1,6 +1,6 @@
 import React from 'react';
-import './LoadingIcon.less';
 import cs from 'classnames';
+import './LoadingIcon.less';
 
 interface LoadingIconProps {
   notOnlyIcon?: boolean;
