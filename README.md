@@ -1,3 +1,1 @@
-# GracefulUI
-
-构建自己的 UI 组件库
+构建自己的 Mini UI 组件库
