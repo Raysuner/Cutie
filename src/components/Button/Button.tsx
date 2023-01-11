@@ -1,79 +1,63 @@
 import React from 'react';
 import classNames from 'classnames';
-import LoadingIcon from './LoadingIcon';
+import Icon from '../Icon';
 import './Button.less';
+import { ButtonProps } from './interface';
 
-export type ButtonType =
-  | 'default'
-  | 'primary'
-  | 'secondary'
-  | 'dashed'
-  | 'link'
-  | 'text';
+const prefixClassName = 'cutie-btn';
 
-export type ButtonShape = 'default' | 'round' | 'circle';
-export type ButtonSize = 'small' | 'medium' | 'large';
-export type ButtonHtmlType = 'button' | 'submit' | 'reset';
-
-export interface BaseButtonProps {
-  type?: ButtonType;
-  shape?: ButtonShape;
-  size?: ButtonSize;
-  disabled?: boolean;
-  className?: string;
-  block?: boolean;
-  loading?: boolean;
-  children?: React.ReactNode;
-  icon?: React.ReactNode;
+function processChildren(children: React.ReactNode): React.ReactNode {
+  return React.Children.map(children, (child) => {
+    return typeof child === 'string' ? <span>{child}</span> : child;
+  });
 }
 
-export type AnchorButtonProps = {
-  href: string;
-  target?: string;
-  onClick?: React.MouseEventHandler<HTMLButtonElement>;
-} & BaseButtonProps &
-  Omit<React.AnchorHTMLAttributes<any>, 'type' | 'onClick'>;
-
-export type NativeButtonProps = {
-  htmlType?: ButtonHtmlType;
-  onClick?: React.MouseEventHandler<HTMLButtonElement>;
-} & BaseButtonProps &
-  Omit<React.ButtonHTMLAttributes<any>, 'type' | 'onClick'>;
-
-export type ButtonProps = Partial<NativeButtonProps & AnchorButtonProps>;
-
-const prefixClassName = 'tq-btn';
-
-const InternalButton: React.ForwardRefRenderFunction<unknown, ButtonProps> = (
+const InternalButton: React.ForwardRefRenderFunction<any, ButtonProps> = (
   props,
   ref
 ) => {
   const {
     className,
     icon,
-    children,
     type = 'default',
     shape = 'default',
     size = 'medium',
     disabled = false,
     loading = false,
     block = false,
+    href,
+    anchorProps,
     htmlType = 'button' as ButtonProps['htmlType'],
+    children,
     ...restProps
   } = props;
 
-  const iconNode = loading ? <LoadingIcon notOnlyIcon={!!children} /> : icon;
   const classString = classNames(className, prefixClassName, {
     [`${prefixClassName}-${shape}`]: shape !== 'default' && shape,
     [`${prefixClassName}-${type}`]: type,
     [`${prefixClassName}-${size}`]: size,
+    [`${prefixClassName}-link`]: href,
     [`${prefixClassName}-loading`]: loading,
     [`${prefixClassName}-block`]: block,
-    [`${prefixClassName}-disabled`]: disabled,
-    [`${prefixClassName}-only-icon`]: !children && children !== 0 && !!iconNode
+    [`${prefixClassName}-disabled`]: disabled
   });
 
-  const handleClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+  const iconNode = loading ? (
+    <Icon className="loading-icon" type="AiOutlineLoading" />
+  ) : (
+    icon
+  );
+
+  const finanChildren = (
+    <>
+      {iconNode}
+      {processChildren(children)}
+    </>
+  );
+
+  const handleAnchorClick = (
+    e: React.MouseEvent<HTMLAnchorElement, MouseEvent>
+  ) => {
     if (loading) {
       e.preventDefault();
       return;
@@ -81,22 +65,52 @@ const InternalButton: React.ForwardRefRenderFunction<unknown, ButtonProps> = (
     props?.onClick?.(e);
   };
 
+  const handleButtonClick = (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
+    if (loading) {
+      e.preventDefault();
+      return;
+    }
+    props?.onClick?.(e);
+  };
+
+  if (href) {
+    const newAnchorProps = { ...anchorProps };
+    if (disabled) {
+      delete newAnchorProps.href;
+    } else {
+      newAnchorProps.href = href;
+    }
+
+    return (
+      <a
+        {...restProps}
+        {...anchorProps}
+        className={classString}
+        onClick={handleAnchorClick}
+        ref={ref}
+      >
+        {finanChildren}
+      </a>
+    );
+  }
+
   return (
     <button
       {...restProps}
       type={htmlType}
       className={classString}
       disabled={disabled}
-      onClick={handleClick}
-      ref={ref as any}
+      onClick={handleButtonClick}
+      ref={ref}
     >
-      {iconNode}
-      {children}
+      {finanChildren}
     </button>
   );
 };
 
-const Button = React.forwardRef<unknown, ButtonProps>(InternalButton);
+const Button = React.forwardRef<any, ButtonProps>(InternalButton);
 Button.displayName = 'Button';
 
 export default Button;
