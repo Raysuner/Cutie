@@ -12,7 +12,7 @@ function processChildren(children: React.ReactNode): React.ReactNode {
   });
 }
 
-const InternalButton: React.ForwardRefRenderFunction<any, ButtonProps> = (
+const InternalButton: React.ForwardRefRenderFunction<unknown, ButtonProps> = (
   props,
   ref
 ) => {
@@ -89,7 +89,7 @@ const InternalButton: React.ForwardRefRenderFunction<any, ButtonProps> = (
         {...anchorProps}
         className={classString}
         onClick={handleAnchorClick}
-        ref={ref}
+        ref={ref as React.ForwardedRef<HTMLAnchorElement>}
       >
         {finanChildren}
       </a>
@@ -103,14 +103,14 @@ const InternalButton: React.ForwardRefRenderFunction<any, ButtonProps> = (
       className={classString}
       disabled={disabled}
       onClick={handleButtonClick}
-      ref={ref}
+      ref={ref as React.ForwardedRef<HTMLButtonElement>}
     >
       {finanChildren}
     </button>
   );
 };
 
-const Button = React.forwardRef<any, ButtonProps>(InternalButton);
+const Button = React.forwardRef<unknown, ButtonProps>(InternalButton);
 Button.displayName = 'Button';
 
 export default Button;
