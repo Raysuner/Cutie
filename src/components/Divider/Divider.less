@@ -1,0 +1,62 @@
+@import '../../assets/style/common.less';
+@import '../../assets/style/color.less';
+
+@prefix-cls: ~'@{prefix}-divider';
+
+.base-border-bottom-style() {
+  content: '';
+  flex: 1;
+  border-bottom: 1px solid;
+  border-bottom-color: inherit;
+}
+
+.text-align-border-bottom-style() {
+  flex-grow: 0;
+  flex-basis: 24px;
+}
+
+.@{prefix-cls} {
+  &-horizontal {
+    min-width: 100%;
+    max-width: 100%;
+    border-bottom: 1px solid @divider-border-color;
+    &.@{prefix-cls}-with-text {
+      display: flex;
+      align-items: center;
+      border-width: 0;
+
+      &::before,
+      &::after {
+        .base-border-bottom-style();
+      }
+
+      &.@{prefix-cls}-with-text-left {
+        &::before {
+          .text-align-border-bottom-style();
+        }
+      }
+
+      &.@{prefix-cls}-with-text-right {
+        &::after {
+          .text-align-border-bottom-style();
+        }
+      }
+    }
+
+    .@{prefix-cls}-text {
+      font-size: 14px;
+      font-weight: 500;
+      padding: 0 16px;
+      box-sizing: border-box;
+    }
+  }
+  &-vertical {
+    min-width: 1px;
+    max-width: 1px;
+    display: inline-block;
+    height: 1em;
+    margin: 0 12px;
+    vertical-align: middle;
+    border-left: 1px solid @divider-border-color;
+  }
+}
