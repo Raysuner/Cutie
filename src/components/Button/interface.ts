@@ -22,19 +22,18 @@ interface BaseButtonProps {
   loading?: boolean;
   icon?: React.ReactNode;
   children?: React.ReactNode;
+  onClick?: React.MouseEventHandler<HTMLAnchorElement | HTMLButtonElement>;
 }
 
 export type AnchorButtonProps = {
   href: string;
   target?: string;
   anchorProps?: React.HTMLProps<HTMLAnchorElement>;
-  onClick?: React.MouseEventHandler<HTMLAnchorElement>;
 } & BaseButtonProps &
   Omit<React.AnchorHTMLAttributes<HTMLAnchorElement>, 'type' | 'onClick'>;
 
 export type NativeButtonProps = {
   htmlType?: ButtonHtmlType;
-  onClick?: React.MouseEventHandler<HTMLButtonElement>;
 } & BaseButtonProps &
   Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, 'type' | 'onClick'>;
 
