@@ -1,37 +1,39 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Form from './components/Form';
 import Button from './components/Button';
-
+import Modal from './components/Modal';
 import './App.css';
 
 function App() {
+  const [visible, setVisible] = useState(false);
   return (
-    <div>
-      <div>
-        <Button type="primary" shape="round" disabled={true}>
-          确认
-        </Button>
+    <div className="app">
+      <Modal visible={visible} />
+
+      <Button onClick={() => setVisible(true)}>点 我</Button>
+      <div className="lorem">
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia esse
+        dolorum aspernatur, officiis inventore, voluptate rerum repellendus
+        exercitationem laudantium ipsam facilis non impedit saepe ea in qui
+        ducimus quibusdam cum!
       </div>
-      <div>
-        <Button
-          type="primary"
-          loading
-          onClick={() => console.log('hello world')}
-        ></Button>
+      <div className="lorem">
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia esse
+        dolorum aspernatur, officiis inventore, voluptate rerum repellendus
+        exercitationem laudantium ipsam facilis non impedit saepe ea in qui
+        ducimus quibusdam cum!
       </div>
-      <div>
-        <Button type="secondary" block>
-          确认
-        </Button>
+      <div className="lorem">
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia esse
+        dolorum aspernatur, officiis inventore, voluptate rerum repellendus
+        exercitationem laudantium ipsam facilis non impedit saepe ea in qui
+        ducimus quibusdam cum!
       </div>
-      <div>
-        <Button type="dashed">确认</Button>
-      </div>
-      <div>
-        <Button type="link">确认</Button>
-      </div>
-      <div>
-        <Button type="text">确认</Button>
+      <div className="lorem">
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia esse
+        dolorum aspernatur, officiis inventore, voluptate rerum repellendus
+        exercitationem laudantium ipsam facilis non impedit saepe ea in qui
+        ducimus quibusdam cum!
       </div>
     </div>
   );
