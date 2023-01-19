@@ -37,27 +37,23 @@ const InternalModal: React.ForwardRefRenderFunction<unknown, ModalProps> = (
     children
   } = props;
 
-  const [isVisible, setIsVisible] = useState(visible);
-
   const handleCancle = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    setIsVisible(false);
     onCancle?.(e);
   };
 
   const handleOk = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    setIsVisible(false);
     onOk?.(e);
   };
 
-  const handleMaskClick = () => {
-    if (maskClosable) {
-      setIsVisible(false);
-    }
+  const handleCloseIconClick = (
+    e: React.MouseEvent<HTMLDivElement, MouseEvent>
+  ) => {
+    onCancle?.(e);
   };
 
-  const handleCloseIconClick = () => {
-    if (closable) {
-      setIsVisible(false);
+  const handleMaskClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+    if (maskClosable) {
+      onCancle?.(e);
     }
   };
 
@@ -86,7 +82,7 @@ const InternalModal: React.ForwardRefRenderFunction<unknown, ModalProps> = (
     }
   };
 
-  return isVisible ? (
+  return visible ? (
     <div
       className={cs(prefixCls, className)}
       style={{ ...style, width }}
@@ -102,14 +98,16 @@ const InternalModal: React.ForwardRefRenderFunction<unknown, ModalProps> = (
       <div className={`${prefixCls}-inner-modal`}>
         <div className={`${prefixCls}-header`}>
           <div className={`${prefixCls}-title`}>{title}</div>
-          <div
-            className={`${prefixCls}-close-icon`}
-            onClick={handleCloseIconClick}
-          >
-            <IconHover>
-              {closeIcon || <Icon type="AiOutlineClose" size="12px" />}
-            </IconHover>
-          </div>
+          {closable && (
+            <div
+              className={`${prefixCls}-close-icon`}
+              onClick={handleCloseIconClick}
+            >
+              <IconHover>
+                {closeIcon || <Icon type="AiOutlineClose" size="12px" />}
+              </IconHover>
+            </div>
+          )}
         </div>
         <Divider />
         <div className={`${prefixCls}-body`} style={bodyStyle}>
