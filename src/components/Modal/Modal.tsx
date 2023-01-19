@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
 import cs from 'classnames';
 import Icon from '../Icon';
 import Divider from '../Divider';
@@ -56,6 +56,25 @@ const InternalModal: React.ForwardRefRenderFunction<unknown, ModalProps> = (
       onCancle?.(e);
     }
   };
+
+  useEffect(() => {
+    if (!visible) {
+      afterClose?.();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [visible]);
+
+  useEffect(() => {
+    if (!keyboard) return;
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        onCancle?.(e);
+      }
+    };
+    document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const renderFooter = (): React.ReactNode => {
     if (footer === null) {

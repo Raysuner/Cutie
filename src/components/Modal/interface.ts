@@ -6,7 +6,7 @@ export interface ModalProps {
   visible?: boolean;
   title?: React.ReactNode;
   onOk?: (e: React.MouseEvent<HTMLElement>) => void;
-  onCancle?: (e: React.MouseEvent<HTMLElement>) => void;
+  onCancle?: (e: React.MouseEvent<HTMLElement> | KeyboardEvent) => void;
   okText?: React.ReactNode;
   cancleText?: React.ReactNode;
   width?: number | string;
