@@ -37,11 +37,7 @@ const InternalModal: React.ForwardRefRenderFunction<unknown, ModalProps> = (
     children
   } = props;
 
-  console.log('visible', visible);
   const [isVisible, setIsVisible] = useState(visible);
-
-  console.log('props', props);
-  console.log('+++++++', isVisible);
 
   const handleCancle = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     setIsVisible(false);
