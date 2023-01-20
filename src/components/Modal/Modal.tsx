@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import cs from 'classnames';
 import Icon from '../Icon';
 import Divider from '../Divider';
@@ -37,23 +37,15 @@ const InternalModal: React.ForwardRefRenderFunction<unknown, ModalProps> = (
     children
   } = props;
 
-  const handleCancle = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    onCancle?.(e);
-  };
+  const [destoryChildren, setDestoryChildren] = useState(false);
 
-  const handleOk = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    onOk?.(e);
-  };
-
-  const handleCloseIconClick = (
-    e: React.MouseEvent<HTMLDivElement, MouseEvent>
+  const handleClose = (
+    e: React.MouseEvent<HTMLElement>,
+    cb?: (e: React.MouseEvent<HTMLElement>) => void
   ) => {
-    onCancle?.(e);
-  };
-
-  const handleMaskClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-    if (maskClosable) {
-      onCancle?.(e);
+    cb?.(e);
+    if (destoryOnClose) {
+      setDestoryChildren(true);
     }
   };
 
@@ -69,6 +61,9 @@ const InternalModal: React.ForwardRefRenderFunction<unknown, ModalProps> = (
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
         onCancle?.(e);
+        if (destoryOnClose) {
+          setDestoryChildren(true);
+        }
       }
     };
     document.addEventListener('keydown', handleKeyDown);
@@ -76,42 +71,50 @@ const InternalModal: React.ForwardRefRenderFunction<unknown, ModalProps> = (
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  useEffect(() => {
+    if (!visible && destoryOnClose) {
+      setDestoryChildren(false);
+    }
+  }, [visible, destoryOnClose]);
+
   const renderFooter = (): React.ReactNode => {
     if (footer === null) {
       return null;
-    } else if (footer) {
-      return (
-        <>
-          <Divider />
-          {footer}
-        </>
-      );
     } else {
+      const footerNode = footer || (
+        <div className={`${prefixCls}-footer`} style={footerStyle}>
+          <Button onClick={(e) => handleClose(e, onCancle)}>
+            {cancleText}
+          </Button>
+          <Button type="primary" onClick={(e) => handleClose(e, onOk)}>
+            {okText}
+          </Button>
+        </div>
+      );
       return (
         <>
           <Divider />
-          <div className={`${prefixCls}-footer`} style={footerStyle}>
-            <Button onClick={handleCancle}>{cancleText}</Button>
-            <Button type="primary" onClick={handleOk}>
-              {okText}
-            </Button>
-          </div>
+          {footerNode}
         </>
       );
     }
   };
 
-  return visible ? (
+  return (
     <div
       className={cs(prefixCls, className)}
-      style={{ ...style, width }}
+      style={{ ...style, width, display: visible ? 'block' : 'none' }}
       ref={ref as React.ForwardedRef<HTMLDivElement>}
     >
       {mask && (
         <div
           className={`${prefixCls}-mask`}
           style={maskStyle}
-          onClick={handleMaskClick}
+          onClick={(e) => {
+            if (maskClosable) {
+              handleClose(e, onCancle);
+            }
+          }}
         />
       )}
       <div className={`${prefixCls}-inner-modal`}>
@@ -120,7 +123,7 @@ const InternalModal: React.ForwardRefRenderFunction<unknown, ModalProps> = (
           {closable && (
             <div
               className={`${prefixCls}-close-icon`}
-              onClick={handleCloseIconClick}
+              onClick={(e) => handleClose(e, onCancle)}
             >
               <IconHover>
                 {closeIcon || <Icon type="AiOutlineClose" size="12px" />}
@@ -130,12 +133,12 @@ const InternalModal: React.ForwardRefRenderFunction<unknown, ModalProps> = (
         </div>
         <Divider />
         <div className={`${prefixCls}-body`} style={bodyStyle}>
-          {children}
+          {destoryChildren ? null : children}
         </div>
         {renderFooter()}
       </div>
     </div>
-  ) : null;
+  );
 };
 
 const Modal = React.forwardRef<unknown, ModalProps>(InternalModal);
