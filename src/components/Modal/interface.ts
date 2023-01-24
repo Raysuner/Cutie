@@ -5,8 +5,8 @@ export interface ModalProps {
   style?: React.CSSProperties;
   visible?: boolean;
   title?: React.ReactNode;
-  onOk?: (e: React.MouseEvent<HTMLElement>) => void;
-  onCancle?: (e: React.MouseEvent<HTMLElement> | KeyboardEvent) => void;
+  onOk?: (e?: React.MouseEvent<HTMLElement>) => void;
+  onCancle?: (e?: React.MouseEvent<HTMLElement> | KeyboardEvent) => void;
   okText?: React.ReactNode;
   cancleText?: React.ReactNode;
   width?: number | string;
@@ -22,6 +22,7 @@ export interface ModalProps {
   closeIcon?: React.ReactNode;
   keyboard?: boolean;
   destoryOnClose?: boolean;
+  getContainer?: () => Element;
 }
 
 export interface IconHoverProps {
@@ -29,4 +30,10 @@ export interface IconHoverProps {
   style?: React.CSSProperties;
   size?: 'small' | 'medium' | 'large';
   children?: React.ReactNode;
+}
+
+export interface MethodModalProps extends ModalProps {
+  icon?: React.ReactNode;
+  content?: React.ReactNode;
+  noticeType?: 'info' | 'success' | 'warning' | 'error';
 }

@@ -2,7 +2,7 @@ import { Component, ReactNode } from 'react';
 import ReactDOM from 'react-dom';
 import { PortalProps } from './interface';
 
-class InnerPortal extends Component<Omit<PortalProps, 'visible'>> {
+class InternalPortal extends Component<Omit<PortalProps, 'visible'>> {
   render(): ReactNode {
     const { children, container } = this.props;
     if (container) {
@@ -12,4 +12,4 @@ class InnerPortal extends Component<Omit<PortalProps, 'visible'>> {
   }
 }
 
-export default InnerPortal;
+export default InternalPortal;

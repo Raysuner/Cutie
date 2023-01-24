@@ -4,6 +4,7 @@ import Icon from '../Icon';
 import Divider from '../Divider';
 import Button from '../Button';
 import IconHover from './IconHover';
+import Portal from '../Portal';
 import { ModalProps } from './interface';
 import './Modal.less';
 
@@ -34,6 +35,7 @@ const InternalModal: React.ForwardRefRenderFunction<unknown, ModalProps> = (
     closeIcon,
     keyboard,
     destoryOnClose,
+    getContainer = () => document.body,
     children
   } = props;
 
@@ -101,43 +103,45 @@ const InternalModal: React.ForwardRefRenderFunction<unknown, ModalProps> = (
   };
 
   return (
-    <div
-      className={cs(prefixCls, className)}
-      style={{ ...style, width, display: visible ? 'block' : 'none' }}
-      ref={ref as React.ForwardedRef<HTMLDivElement>}
-    >
-      {mask && (
-        <div
-          className={`${prefixCls}-mask`}
-          style={maskStyle}
-          onClick={(e) => {
-            if (maskClosable) {
-              handleClose(e, onCancle);
-            }
-          }}
-        />
-      )}
-      <div className={`${prefixCls}-inner-modal`}>
-        <div className={`${prefixCls}-header`}>
-          <div className={`${prefixCls}-title`}>{title}</div>
-          {closable && (
-            <div
-              className={`${prefixCls}-close-icon`}
-              onClick={(e) => handleClose(e, onCancle)}
-            >
-              <IconHover>
-                {closeIcon || <Icon type="AiOutlineClose" size="12px" />}
-              </IconHover>
-            </div>
-          )}
+    <Portal visible={visible} container={getContainer()}>
+      <div
+        className={cs(prefixCls, className)}
+        style={{ ...style, width, display: visible ? 'block' : 'none' }}
+        ref={ref as React.ForwardedRef<HTMLDivElement>}
+      >
+        {mask && (
+          <div
+            className={`${prefixCls}-mask`}
+            style={maskStyle}
+            onClick={(e) => {
+              if (maskClosable) {
+                handleClose(e, onCancle);
+              }
+            }}
+          />
+        )}
+        <div className={`${prefixCls}-inner-modal`}>
+          <div className={`${prefixCls}-header`}>
+            <div className={`${prefixCls}-title`}>{title}</div>
+            {closable && (
+              <div
+                className={`${prefixCls}-close-icon`}
+                onClick={(e) => handleClose(e, onCancle)}
+              >
+                <IconHover>
+                  {closeIcon || <Icon type="AiOutlineClose" size="12px" />}
+                </IconHover>
+              </div>
+            )}
+          </div>
+          <Divider />
+          <div className={`${prefixCls}-body`} style={bodyStyle}>
+            {destoryChildren ? null : children}
+          </div>
+          {renderFooter()}
         </div>
-        <Divider />
-        <div className={`${prefixCls}-body`} style={bodyStyle}>
-          {destoryChildren ? null : children}
-        </div>
-        {renderFooter()}
       </div>
-    </div>
+    </Portal>
   );
 };
 
