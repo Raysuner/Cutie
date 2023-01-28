@@ -22,7 +22,7 @@ export interface ModalProps {
   closeIcon?: React.ReactNode;
   keyboard?: boolean;
   destoryOnClose?: boolean;
-  getContainer?: () => Element;
+  container?: Element | DocumentFragment;
 }
 
 export interface IconHoverProps {
