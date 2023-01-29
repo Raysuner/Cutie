@@ -1,10 +1,12 @@
+import { ReactNode, CSSProperties } from 'react';
+
 export type TextAlign = 'left' | 'center' | 'right';
 export type Direction = 'horizontal' | 'vertical';
 
 export interface DividerProps {
   className?: string;
-  style?: React.CSSProperties;
+  style?: CSSProperties;
   direction?: Direction;
   textAlign?: TextAlign;
-  children?: React.ReactNode;
+  children?: ReactNode;
 }

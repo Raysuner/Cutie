@@ -1,13 +1,13 @@
-import React from 'react';
+import React, { Component, ReactNode } from 'react';
 import InternalPortal from './Portal';
 import { PortalProps } from './interface';
 
-class Portal extends React.Component<PortalProps> {
+class Portal extends Component<PortalProps> {
   instance: InternalPortal | null = null;
   componentWillUnmount(): void {
     this.instance = null;
   }
-  render(): React.ReactNode {
+  render(): ReactNode {
     const { visible } = this.props;
     return this.instance || visible ? (
       <InternalPortal ref={(node) => (this.instance = node)} {...this.props} />

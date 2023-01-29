@@ -1,10 +1,7 @@
-import React from 'react';
+import React, { FormHTMLAttributes, ReactNode } from 'react';
 import { IFieldContext } from './FieldContext';
 
-export type BaseForm = Omit<
-  React.FormHTMLAttributes<HTMLFormElement>,
-  'onSubmit'
->;
+export type BaseForm = Omit<FormHTMLAttributes<HTMLFormElement>, 'onSubmit'>;
 export type Store = { [key: string]: any };
 
 export interface FieldProps {
@@ -13,7 +10,7 @@ export interface FieldProps {
   initialValue?: any;
   valuePropName?: string;
   triggerPropName?: string;
-  children?: React.ReactNode;
+  children?: ReactNode;
   fieldContext?: IFieldContext;
   getValueFromEvent?: Function;
 }

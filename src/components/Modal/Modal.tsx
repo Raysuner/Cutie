@@ -1,4 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, {
+  useEffect,
+  useState,
+  ForwardRefRenderFunction,
+  ReactNode,
+  forwardRef,
+  MouseEvent,
+  ForwardedRef
+} from 'react';
 import cs from 'classnames';
 import Icon from '../Icon';
 import Divider from '../Divider';
@@ -10,7 +18,7 @@ import './Modal.less';
 
 const prefixCls = 'cutie-modal';
 
-const InternalModal: React.ForwardRefRenderFunction<unknown, ModalProps> = (
+const InternalModal: ForwardRefRenderFunction<unknown, ModalProps> = (
   props,
   ref
 ) => {
@@ -35,15 +43,15 @@ const InternalModal: React.ForwardRefRenderFunction<unknown, ModalProps> = (
     closeIcon,
     keyboard,
     destoryOnClose,
-    getContainer = () => document.body,
+    container = document.body,
     children
   } = props;
 
   const [destoryChildren, setDestoryChildren] = useState(false);
 
   const handleClose = (
-    e: React.MouseEvent<HTMLElement>,
-    cb?: (e: React.MouseEvent<HTMLElement>) => void
+    e: MouseEvent<HTMLElement>,
+    cb?: (e: MouseEvent<HTMLElement>) => void
   ) => {
     cb?.(e);
     if (destoryOnClose) {
@@ -79,7 +87,7 @@ const InternalModal: React.ForwardRefRenderFunction<unknown, ModalProps> = (
     }
   }, [visible, destoryOnClose]);
 
-  const renderFooter = (): React.ReactNode => {
+  const renderFooter = (): ReactNode => {
     if (footer === null) {
       return null;
     } else {
@@ -103,11 +111,11 @@ const InternalModal: React.ForwardRefRenderFunction<unknown, ModalProps> = (
   };
 
   return (
-    <Portal visible={visible} container={getContainer()}>
+    <Portal visible={visible} container={container}>
       <div
         className={cs(prefixCls, className)}
         style={{ ...style, width, display: visible ? 'block' : 'none' }}
-        ref={ref as React.ForwardedRef<HTMLDivElement>}
+        ref={ref as ForwardedRef<HTMLDivElement>}
       >
         {mask && (
           <div
@@ -145,7 +153,7 @@ const InternalModal: React.ForwardRefRenderFunction<unknown, ModalProps> = (
   );
 };
 
-const Modal = React.forwardRef<unknown, ModalProps>(InternalModal);
+const Modal = forwardRef<unknown, ModalProps>(InternalModal);
 
 export { type ModalProps };
 export default Modal;

@@ -1,8 +1,15 @@
-import React from 'react';
+import React, {
+  Component,
+  ChangeEvent,
+  ReactNode,
+  isValidElement,
+  cloneElement,
+  useContext
+} from 'react';
 import { FieldContext } from './FieldContext';
-import { FieldProps, FieldsEntity, Store } from './typings';
+import { FieldProps, FieldsEntity, Store } from './interface';
 
-class Field extends React.Component<FieldProps> implements FieldsEntity {
+class Field extends Component<FieldProps> implements FieldsEntity {
   constructor(props: FieldProps) {
     super(props);
     props.fieldContext?.formStore.initFieldEntity(this);
@@ -33,7 +40,7 @@ class Field extends React.Component<FieldProps> implements FieldsEntity {
   }
 
   private getDefaultValueFromEvent(valuePropName: string, ...args: any[]) {
-    const event = args[0] as React.ChangeEvent<HTMLInputElement>;
+    const event = args[0] as ChangeEvent<HTMLInputElement>;
     if (event && event.target && valuePropName in event.target) {
       // @ts-ignore
       return (event.target as HTMLInputElement)[valuePropName];
@@ -51,7 +58,7 @@ class Field extends React.Component<FieldProps> implements FieldsEntity {
     const value = this.props.fieldContext?.formStore.getFieldValue(name!);
     const trigger = (...args: any[]) => {
       let newValue: any;
-      if (!!getValueFromEvent) {
+      if (getValueFromEvent) {
         newValue = getValueFromEvent(...args);
       } else {
         newValue = this.getDefaultValueFromEvent(valuePropName, ...args);
@@ -72,10 +79,10 @@ class Field extends React.Component<FieldProps> implements FieldsEntity {
   }
 
   public render() {
-    let node: React.ReactNode;
+    let node: ReactNode;
     const { children } = this.props;
-    if (React.isValidElement(children)) {
-      node = React.cloneElement(children, this.getControlled(children.props));
+    if (isValidElement(children)) {
+      node = cloneElement(children, this.getControlled(children.props));
     } else {
       node = children;
     }
@@ -85,7 +92,7 @@ class Field extends React.Component<FieldProps> implements FieldsEntity {
 }
 
 export default function FieldWrapper(props: Omit<FieldProps, 'fieldContext'>) {
-  const fieldContext = React.useContext(FieldContext);
+  const fieldContext = useContext(FieldContext);
   console.log('fieldContext', fieldContext);
   return (
     <div style={{ display: 'flex', marginBottom: 12 }}>

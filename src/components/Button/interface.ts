@@ -1,4 +1,10 @@
-import React from 'react';
+import React, {
+  ReactNode,
+  MouseEventHandler,
+  HTMLProps,
+  AnchorHTMLAttributes,
+  ButtonHTMLAttributes
+} from 'react';
 
 export type ButtonType =
   | 'default'
@@ -20,21 +26,21 @@ interface BaseButtonProps {
   className?: string;
   block?: boolean;
   loading?: boolean;
-  icon?: React.ReactNode;
-  children?: React.ReactNode;
-  onClick?: React.MouseEventHandler<HTMLAnchorElement | HTMLButtonElement>;
+  icon?: ReactNode;
+  children?: ReactNode;
+  onClick?: MouseEventHandler<HTMLAnchorElement | HTMLButtonElement>;
 }
 
 export type AnchorButtonProps = {
   href: string;
   target?: string;
-  anchorProps?: React.HTMLProps<HTMLAnchorElement>;
+  anchorProps?: HTMLProps<HTMLAnchorElement>;
 } & BaseButtonProps &
-  Omit<React.AnchorHTMLAttributes<HTMLAnchorElement>, 'type' | 'onClick'>;
+  Omit<AnchorHTMLAttributes<HTMLAnchorElement>, 'type' | 'onClick'>;
 
 export type NativeButtonProps = {
   htmlType?: ButtonHtmlType;
 } & BaseButtonProps &
-  Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, 'type' | 'onClick'>;
+  Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'type' | 'onClick'>;
 
 export type ButtonProps = Partial<NativeButtonProps & AnchorButtonProps>;

@@ -1,4 +1,4 @@
-import { FieldsEntity, Store } from './typings';
+import { FieldsEntity, Store } from './interface';
 
 export class FormStore {
   private initialStore = {};

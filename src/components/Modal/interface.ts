@@ -1,25 +1,25 @@
-import React from 'react';
+import React, { CSSProperties, ReactNode, MouseEvent } from 'react';
 
 export interface ModalProps {
   className?: string;
-  style?: React.CSSProperties;
+  style?: CSSProperties;
   visible?: boolean;
-  title?: React.ReactNode;
-  onOk?: (e?: React.MouseEvent<HTMLElement>) => void;
-  onCancle?: (e?: React.MouseEvent<HTMLElement> | KeyboardEvent) => void;
-  okText?: React.ReactNode;
-  cancleText?: React.ReactNode;
+  title?: ReactNode;
+  onOk?: (e?: MouseEvent<HTMLElement>) => void;
+  onCancle?: (e?: MouseEvent<HTMLElement> | KeyboardEvent) => void;
+  okText?: ReactNode;
+  cancleText?: ReactNode;
   width?: number | string;
   closable?: boolean;
   afterClose?: () => void;
-  footer?: React.ReactNode;
+  footer?: ReactNode;
   mask?: boolean;
   maskClosable?: boolean;
-  maskStyle?: React.CSSProperties;
-  bodyStyle?: React.CSSProperties;
-  footerStyle?: React.CSSProperties;
-  children?: React.ReactNode;
-  closeIcon?: React.ReactNode;
+  maskStyle?: CSSProperties;
+  bodyStyle?: CSSProperties;
+  footerStyle?: CSSProperties;
+  children?: ReactNode;
+  closeIcon?: ReactNode;
   keyboard?: boolean;
   destoryOnClose?: boolean;
   container?: Element | DocumentFragment;
@@ -27,13 +27,13 @@ export interface ModalProps {
 
 export interface IconHoverProps {
   className?: string;
-  style?: React.CSSProperties;
+  style?: CSSProperties;
   size?: 'small' | 'medium' | 'large';
-  children?: React.ReactNode;
+  children?: ReactNode;
 }
 
 export interface MethodModalProps extends ModalProps {
-  icon?: React.ReactNode;
-  content?: React.ReactNode;
+  icon?: ReactNode;
+  content?: ReactNode;
   noticeType?: 'info' | 'success' | 'warning' | 'error';
 }

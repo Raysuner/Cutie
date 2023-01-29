@@ -1,12 +1,12 @@
-import React, { useRef, useMemo } from 'react';
+import React, { useRef, useMemo, ReactNode } from 'react';
 import { FieldContext } from './FieldContext';
 import { FormStore } from './Store';
-import { BaseForm, Store } from './typings';
+import { BaseForm, Store } from './interface';
 
 interface FormProps extends BaseForm {
   form?: FormStore;
   initialValues?: Store;
-  children?: React.ReactNode;
+  children?: ReactNode;
 }
 
 export default function Form(props: FormProps) {

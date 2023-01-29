@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { CSSProperties } from 'react';
 import * as AntIcon from 'react-icons/ai';
 import './Icon.less';
 
@@ -7,7 +7,7 @@ type IconType = keyof typeof AntIcon;
 export interface IconProps {
   type: IconType;
   className?: string;
-  style?: React.CSSProperties;
+  style?: CSSProperties;
   color?: string;
   size?: string;
 }

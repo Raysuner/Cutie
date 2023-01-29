@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { forwardRef, isValidElement } from 'react';
 import cs from 'classnames';
 import { DividerProps } from './interface';
 import './Divider.less';
@@ -22,7 +22,7 @@ function InnerDivider(props: DividerProps) {
       })}
       style={style}
     >
-      {React.isValidElement(children) && children}
+      {isValidElement(children) && children}
       {typeof children === 'string' && (
         <span className={`${prefixCls}-text`}>{children}</span>
       )}
@@ -30,6 +30,6 @@ function InnerDivider(props: DividerProps) {
   );
 }
 
-const Divider = React.forwardRef<unknown, DividerProps>(InnerDivider);
+const Divider = forwardRef<unknown, DividerProps>(InnerDivider);
 
 export default Divider;

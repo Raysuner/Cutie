@@ -1,4 +1,11 @@
-import React from 'react';
+import React, {
+  forwardRef,
+  ForwardRefRenderFunction,
+  Children,
+  ReactNode,
+  MouseEvent,
+  ForwardedRef
+} from 'react';
 import classNames from 'classnames';
 import Icon from '../Icon';
 import './Button.less';
@@ -6,13 +13,13 @@ import { ButtonProps } from './interface';
 
 const prefixClassName = 'cutie-btn';
 
-function processChildren(children: React.ReactNode): React.ReactNode {
-  return React.Children.map(children, (child) => {
+function processChildren(children: ReactNode): ReactNode {
+  return Children.map(children, (child) => {
     return typeof child === 'string' ? <span>{child}</span> : child;
   });
 }
 
-const InternalButton: React.ForwardRefRenderFunction<unknown, ButtonProps> = (
+const InternalButton: ForwardRefRenderFunction<unknown, ButtonProps> = (
   props,
   ref
 ) => {
@@ -55,9 +62,7 @@ const InternalButton: React.ForwardRefRenderFunction<unknown, ButtonProps> = (
     </>
   );
 
-  const handleAnchorClick = (
-    e: React.MouseEvent<HTMLAnchorElement, MouseEvent>
-  ) => {
+  const handleAnchorClick = (e: MouseEvent<HTMLAnchorElement>) => {
     if (loading) {
       e.preventDefault();
       return;
@@ -65,9 +70,7 @@ const InternalButton: React.ForwardRefRenderFunction<unknown, ButtonProps> = (
     props?.onClick?.(e);
   };
 
-  const handleButtonClick = (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ) => {
+  const handleButtonClick = (e: MouseEvent<HTMLButtonElement>) => {
     if (loading) {
       e.preventDefault();
       return;
@@ -89,7 +92,7 @@ const InternalButton: React.ForwardRefRenderFunction<unknown, ButtonProps> = (
         {...anchorProps}
         className={classString}
         onClick={handleAnchorClick}
-        ref={ref as React.ForwardedRef<HTMLAnchorElement>}
+        ref={ref as ForwardedRef<HTMLAnchorElement>}
       >
         {finanChildren}
       </a>
@@ -103,14 +106,14 @@ const InternalButton: React.ForwardRefRenderFunction<unknown, ButtonProps> = (
       className={classString}
       disabled={disabled}
       onClick={handleButtonClick}
-      ref={ref as React.ForwardedRef<HTMLButtonElement>}
+      ref={ref as ForwardedRef<HTMLButtonElement>}
     >
       {finanChildren}
     </button>
   );
 };
 
-const Button = React.forwardRef<unknown, ButtonProps>(InternalButton);
+const Button = forwardRef<unknown, ButtonProps>(InternalButton);
 Button.displayName = 'Button';
 
 export default Button;
