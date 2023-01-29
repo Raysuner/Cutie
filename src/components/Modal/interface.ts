@@ -22,7 +22,7 @@ export interface ModalProps {
   closeIcon?: ReactNode;
   keyboard?: boolean;
   destoryOnClose?: boolean;
-  container?: Element | DocumentFragment;
+  container?: Element;
 }
 
 export interface IconHoverProps {
@@ -36,4 +36,9 @@ export interface MethodModalProps extends ModalProps {
   icon?: ReactNode;
   content?: ReactNode;
   noticeType?: 'info' | 'success' | 'warning' | 'error';
+}
+
+export interface MethodModalReturnType {
+  close: () => void;
+  update: () => void;
 }
