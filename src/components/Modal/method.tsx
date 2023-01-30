@@ -1,12 +1,12 @@
 import React, { ReactElement } from 'react';
 import Icon from '../Icon';
-import { MethodModalProps } from './interface';
+import { MethodModalConfig } from './interface';
 import customRender from '../../utils/react-dom';
 import Modal from './Modal';
 
-const destoryList: Array<() => void> = [];
+export const destoryList: Array<() => void> = [];
 
-function transformConfig(config: MethodModalProps) {
+function transformConfig(config: MethodModalConfig) {
   let icon = config.icon;
   if (!icon && icon !== null) {
     switch (config.noticeType) {
@@ -40,17 +40,17 @@ function transformConfig(config: MethodModalProps) {
   };
 }
 
-function method(props: MethodModalProps) {
+function method(config: MethodModalConfig) {
   let root: { render: (app: ReactElement) => void; unmount: () => void };
   const div = document.createElement('div');
   document.body.appendChild(div);
-  let modalConfig = transformConfig({ ...props, visible: true });
+  let modalConfig = transformConfig({ ...config, visible: true });
   render(modalConfig);
   destoryList.push(close);
 
-  function render(rendProps: MethodModalProps) {
+  function render(rendProps: MethodModalConfig) {
     const container = rendProps.container ?? document.body;
-    const modal = <Modal {...props} />;
+    const modal = <Modal {...config} />;
     if (root) {
       root.render(modal);
     } else {
@@ -67,7 +67,7 @@ function method(props: MethodModalProps) {
     render(modalConfig);
   }
 
-  function update(newConfig: MethodModalProps) {
+  function update(newConfig: MethodModalConfig) {
     modalConfig = transformConfig({
       ...modalConfig,
       ...newConfig

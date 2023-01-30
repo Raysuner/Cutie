@@ -1,4 +1,9 @@
-import React, { CSSProperties, ReactNode, MouseEvent } from 'react';
+import React, {
+  CSSProperties,
+  ReactNode,
+  MouseEvent,
+  ForwardRefExoticComponent
+} from 'react';
 
 export interface ModalProps {
   className?: string;
@@ -32,7 +37,7 @@ export interface IconHoverProps {
   children?: ReactNode;
 }
 
-export interface MethodModalProps extends ModalProps {
+export interface MethodModalConfig extends ModalProps {
   icon?: ReactNode;
   content?: ReactNode;
   noticeType?: 'info' | 'success' | 'warning' | 'error';
@@ -40,5 +45,15 @@ export interface MethodModalProps extends ModalProps {
 
 export interface MethodModalReturnType {
   close: () => void;
-  update: () => void;
+  update: (config: MethodModalConfig) => void;
+}
+
+type ModalMethodType = (config: MethodModalConfig) => MethodModalReturnType;
+export interface MethodModal extends ForwardRefExoticComponent<ModalProps> {
+  confirm: ModalMethodType;
+  info: ModalMethodType;
+  success: ModalMethodType;
+  warning: ModalMethodType;
+  error: ModalMethodType;
+  destoryAll: () => void;
 }

@@ -13,7 +13,8 @@ import Divider from '../Divider';
 import Button from '../Button';
 import IconHover from './IconHover';
 import Portal from '../Portal';
-import { ModalProps } from './interface';
+import { ModalProps, MethodModalConfig, MethodModal } from './interface';
+import method, { destoryList } from './method';
 import './Modal.less';
 
 const prefixCls = 'cutie-modal';
@@ -153,7 +154,23 @@ const InternalModal: ForwardRefRenderFunction<unknown, ModalProps> = (
   );
 };
 
-const Modal = forwardRef<unknown, ModalProps>(InternalModal);
+const Modal: MethodModal = forwardRef<unknown, ModalProps>(
+  InternalModal
+) as MethodModal;
 
-export { type ModalProps };
+(['confirm', 'info', 'success', 'warning', 'error'] as const).forEach(
+  (type) => {
+    Modal[type] = (config: MethodModalConfig) => {
+      return method(config);
+    };
+  }
+);
+
+Modal.destoryAll = () => {
+  while (destoryList.length) {
+    const close = destoryList.pop();
+    close?.();
+  }
+};
+
 export default Modal;
