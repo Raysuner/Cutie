@@ -1,6 +1,6 @@
 import React, { ReactElement } from 'react';
 import ReactDOM from 'react-dom';
-import { isObject } from './is';
+import ReactDOMClient from 'react-dom/client';
 
 interface Root {
   render: (app: ReactElement) => void;
@@ -9,15 +9,8 @@ interface Root {
 
 type CreateRootFnType = (container: Element | DocumentFragment) => Root;
 
-const __SECRET_INTERNALS__ =
-  '__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED';
-
-const customReactDOM = ReactDOM as typeof ReactDOM & {
-  createRoot: CreateRootFnType;
-  [__SECRET_INTERNALS__]: {
-    usingClientEntry?: boolean;
-  };
-};
+const customReactDOM = { ...ReactDOM, ...ReactDOMClient } as typeof ReactDOM &
+  typeof ReactDOMClient;
 
 let customRender: (
   app: ReactElement,
@@ -30,20 +23,12 @@ let customRender: (
 const isReact18 = ReactDOM.version.split('.')?.[0] === '18';
 const createRoot: CreateRootFnType = customReactDOM.createRoot;
 
-function updateUsingClientEntry(showWarning: boolean) {
-  if (isObject(customReactDOM[__SECRET_INTERNALS__])) {
-    customReactDOM[__SECRET_INTERNALS__].usingClientEntry = showWarning;
-  }
-}
-
 if (isReact18 && createRoot) {
   customRender = function (
     app: ReactElement,
     container: Element | DocumentFragment
   ) {
-    updateUsingClientEntry(false);
     const root = createRoot(container);
-    updateUsingClientEntry(true);
     root.render(app);
     return root;
   };
