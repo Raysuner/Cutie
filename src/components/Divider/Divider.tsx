@@ -5,7 +5,7 @@ import './Divider.less';
 
 const prefixCls = 'cutie-divider';
 
-function InnerDivider(props: DividerProps) {
+function InnerDivider(props: DividerProps, ref: any) {
   const {
     className,
     style,
