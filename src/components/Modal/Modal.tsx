@@ -158,13 +158,15 @@ const Modal: MethodModal = forwardRef<unknown, ModalProps>(
   InternalModal
 ) as MethodModal;
 
-(['confirm', 'info', 'success', 'warning', 'error'] as const).forEach(
-  (type) => {
-    Modal[type] = (config: MethodModalConfig) => {
-      return method(config);
-    };
-  }
-);
+(['info', 'success', 'warning', 'error'] as const).forEach((type) => {
+  Modal[type] = (config: MethodModalConfig) => {
+    return method({
+      ...config,
+      isNotice: true,
+      noticeType: type
+    });
+  };
+});
 
 Modal.destoryAll = () => {
   while (destoryList.length) {
