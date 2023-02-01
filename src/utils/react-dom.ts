@@ -5,6 +5,7 @@ import ReactDOMClient from 'react-dom/client';
 interface Root {
   render: (app: ReactElement) => void;
   unmount: () => void;
+  _unmount: () => void;
 }
 
 type CreateRootFnType = (container: Element | DocumentFragment) => Root;
@@ -17,11 +18,12 @@ let customRender: (
   container: Element | DocumentFragment
 ) => {
   render: (app: ReactElement) => void;
-  unmount: () => void;
+  _unmount: () => void;
 };
 
 const isReact18 = ReactDOM.version.split('.')?.[0] === '18';
-const createRoot: CreateRootFnType = customReactDOM.createRoot;
+const createRoot: CreateRootFnType =
+  customReactDOM.createRoot as CreateRootFnType;
 
 if (isReact18 && createRoot) {
   customRender = function (
@@ -30,6 +32,11 @@ if (isReact18 && createRoot) {
   ) {
     const root = createRoot(container);
     root.render(app);
+    root._unmount = () => {
+      setTimeout(() => {
+        root.unmount();
+      });
+    };
     return root;
   };
 } else {
@@ -42,7 +49,7 @@ if (isReact18 && createRoot) {
       render(app: ReactElement) {
         customReactDOM.render(app, container);
       },
-      unmount() {
+      _unmount() {
         customReactDOM.unmountComponentAtNode(container);
       }
     };
