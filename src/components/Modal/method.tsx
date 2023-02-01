@@ -23,7 +23,6 @@ function transformConfig(config: MethodModalConfig) {
         icon = <Icon type="AiFillCloseCircle" />;
         break;
       default:
-        icon = <Icon type="AiFillExclamationCircle" />;
         break;
     }
   }
@@ -41,7 +40,7 @@ function transformConfig(config: MethodModalConfig) {
 }
 
 function method(config: MethodModalConfig) {
-  let root: { render: (app: ReactElement) => void; unmount: () => void };
+  let root: { render: (app: ReactElement) => void; _unmount: () => void };
   const div = document.createElement('div');
   document.body.appendChild(div);
   let modalConfig = transformConfig({ ...config, visible: true });
@@ -49,19 +48,19 @@ function method(config: MethodModalConfig) {
   destoryList.push(close);
 
   function render(rendProps: MethodModalConfig) {
-    const container = rendProps.container ?? document.body;
-    const modal = <Modal {...config} />;
+    const modal = <Modal {...rendProps}>{rendProps.content}</Modal>;
     if (root) {
       root.render(modal);
     } else {
-      root = customRender(modal, container);
+      root = customRender(modal, div);
     }
   }
 
   function close() {
+    const afterClose = config.afterClose;
     modalConfig.visible = false;
     modalConfig.afterClose = () => {
-      modalConfig.afterClose?.();
+      afterClose?.();
       destory();
     };
     render(modalConfig);
@@ -76,6 +75,7 @@ function method(config: MethodModalConfig) {
   }
 
   function destory() {
+    root._unmount();
     if (div.parentNode) {
       div.parentNode.removeChild(div);
     }
