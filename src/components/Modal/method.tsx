@@ -53,9 +53,24 @@ function method(config: MethodModalConfig) {
   let root: Root;
   const div = document.createElement('div');
   document.body.appendChild(div);
-  let modalConfig = transformConfig({ ...config, visible: true });
+  let modalConfig = transformConfig({
+    ...config,
+    visible: true,
+    onOk,
+    onCancel
+  });
   render(modalConfig);
   destoryList.push(close);
+
+  function onOk() {
+    config.onOk?.();
+    close();
+  }
+
+  function onCancel() {
+    config.onCancel?.();
+    close();
+  }
 
   function render(rendProps: MethodModalConfig) {
     const modal = <Modal {...rendProps}>{rendProps.content}</Modal>;
