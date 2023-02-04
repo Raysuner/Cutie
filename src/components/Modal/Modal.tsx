@@ -161,6 +161,10 @@ const Modal: MethodModal = forwardRef<unknown, ModalProps>(
   InternalModal
 ) as MethodModal;
 
+Modal.show = (config: MethodModalConfig) => {
+  return method(config);
+};
+
 (['info', 'success', 'warning', 'error'] as const).forEach((type) => {
   Modal[type] = (config: MethodModalConfig) => {
     return method({

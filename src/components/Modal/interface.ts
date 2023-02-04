@@ -51,6 +51,7 @@ export interface MethodModalReturnType {
 }
 
 type ModalMethodType = (config: MethodModalConfig) => MethodModalReturnType;
+
 export interface MethodModal extends ForwardRefExoticComponent<ModalProps> {
   show: ModalMethodType;
   info: ModalMethodType;

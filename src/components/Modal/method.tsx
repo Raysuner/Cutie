@@ -53,6 +53,7 @@ function method(config: MethodModalConfig) {
   let root: Root;
   const div = document.createElement('div');
   document.body.appendChild(div);
+
   let modalConfig = transformConfig({
     ...config,
     visible: true,
@@ -61,6 +62,11 @@ function method(config: MethodModalConfig) {
   });
   render(modalConfig);
   destoryList.push(close);
+
+  return {
+    update,
+    close
+  };
 
   function onOk() {
     config.onOk?.();
@@ -112,11 +118,6 @@ function method(config: MethodModalConfig) {
       }
     }
   }
-
-  return {
-    update,
-    close
-  };
 }
 
 export default method;
