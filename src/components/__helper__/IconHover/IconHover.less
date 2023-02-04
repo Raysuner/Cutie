@@ -1,0 +1,27 @@
+@import '../../../assets//style/common.less';
+
+@prefix-cls: ~'@{prefix}-icon-hover';
+
+.@{prefix-cls} {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  cursor: pointer;
+  &.@{prefix-cls}-size-small {
+    width: 16px;
+    height: 16px;
+  }
+  &.@{prefix-cls}-size-medium {
+    width: 20px;
+    height: 20px;
+  }
+  &.@{prefix-cls}-size-large {
+    width: 24px;
+    height: 24px;
+  }
+  &:hover {
+    background-color: rgb(242, 243, 245);
+    transition: background-color 0.2s;
+  }
+}
