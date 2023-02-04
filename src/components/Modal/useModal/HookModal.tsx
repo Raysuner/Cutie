@@ -4,10 +4,12 @@ import Modal from '../Modal';
 import { transformConfig } from '../method';
 
 const HookModal = forwardRef<unknown, MethodModalConfig>((props, ref) => {
-  const [modalProps, setModalProps] = useState<MethodModalConfig>({
-    ...props,
-    visible: true
-  });
+  const [modalProps, setModalProps] = useState<MethodModalConfig>(
+    transformConfig({
+      ...props,
+      visible: true
+    })
+  );
 
   useImperativeHandle(ref, () => {
     return {
