@@ -11,7 +11,7 @@ interface Root {
 
 export const destoryList: Array<() => void> = [];
 
-function transformConfig(config: MethodModalConfig) {
+export function transformConfig(config: MethodModalConfig) {
   let icon = config.icon;
   if (!icon && icon !== null) {
     if (config.isNotice) {

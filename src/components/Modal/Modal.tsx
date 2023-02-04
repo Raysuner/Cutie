@@ -11,10 +11,11 @@ import cs from 'classnames';
 import Icon from '../Icon';
 import Divider from '../Divider';
 import Button from '../Button';
-import IconHover from './IconHover';
+import IconHover from '../__helper__/IconHover/IconHover';
 import Portal from '../Portal';
 import { ModalProps, MethodModalConfig, MethodModal } from './interface';
 import method, { destoryList } from './method';
+import useModal from './useModal';
 import './Modal.less';
 
 const prefixCls = 'cutie-modal';
@@ -181,5 +182,7 @@ Modal.destoryAll = () => {
     close?.();
   }
 };
+
+Modal.useModal = useModal;
 
 export default Modal;

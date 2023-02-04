@@ -2,7 +2,8 @@ import React, {
   CSSProperties,
   ReactNode,
   MouseEvent,
-  ForwardRefExoticComponent
+  ForwardRefExoticComponent,
+  ReactElement
 } from 'react';
 
 export interface ModalProps {
@@ -52,11 +53,16 @@ export interface MethodModalReturnType {
 
 type ModalMethodType = (config: MethodModalConfig) => MethodModalReturnType;
 
-export interface MethodModal extends ForwardRefExoticComponent<ModalProps> {
+export interface MethodType {
   show: ModalMethodType;
   info: ModalMethodType;
   success: ModalMethodType;
   warning: ModalMethodType;
   error: ModalMethodType;
+}
+export interface MethodModal
+  extends ForwardRefExoticComponent<ModalProps>,
+    MethodType {
   destoryAll: () => void;
+  useModal: () => [MethodType, ReactElement];
 }
