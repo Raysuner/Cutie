@@ -4,26 +4,35 @@ import { MethodModalConfig } from './interface';
 import customRender from '../../utils/react-dom';
 import Modal from './Modal';
 
+interface Root {
+  render: (app: ReactElement) => void;
+  _unmount: () => void;
+}
+
 export const destoryList: Array<() => void> = [];
 
 function transformConfig(config: MethodModalConfig) {
   let icon = config.icon;
   if (!icon && icon !== null) {
-    switch (config.noticeType) {
-      case 'info':
-        icon = <Icon type="AiFillInfoCircle" />;
-        break;
-      case 'success':
-        icon = <Icon type="AiFillCheckCircle" />;
-        break;
-      case 'warning':
-        icon = <Icon type="AiFillExclamationCircle" />;
-        break;
-      case 'error':
-        icon = <Icon type="AiFillCloseCircle" />;
-        break;
-      default:
-        break;
+    if (config.isNotice) {
+      switch (config.noticeType) {
+        case 'info':
+          icon = <Icon type="AiFillInfoCircle" color="rgb(22,93,255)" />;
+          break;
+        case 'success':
+          icon = <Icon type="AiFillCheckCircle" color="rgb(0, 180, 42)" />;
+          break;
+        case 'warning':
+          icon = (
+            <Icon type="AiFillExclamationCircle" color="rgb(255, 125, 0)" />
+          );
+          break;
+        case 'error':
+          icon = <Icon type="AiFillCloseCircle" color="rgb(245, 63, 63)" />;
+          break;
+        default:
+          break;
+      }
     }
   }
   return {
@@ -35,12 +44,13 @@ function transformConfig(config: MethodModalConfig) {
           {icon}
           {config.title}
         </span>
-      )
+      ),
+    hideCancel: config.isNotice
   };
 }
 
 function method(config: MethodModalConfig) {
-  let root: { render: (app: ReactElement) => void; _unmount: () => void };
+  let root: Root;
   const div = document.createElement('div');
   document.body.appendChild(div);
   let modalConfig = transformConfig({ ...config, visible: true });
