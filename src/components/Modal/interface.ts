@@ -11,9 +11,9 @@ export interface ModalProps {
   visible?: boolean;
   title?: ReactNode;
   onOk?: (e?: MouseEvent<HTMLElement>) => void;
-  onCancle?: (e?: MouseEvent<HTMLElement> | KeyboardEvent) => void;
+  onCancel?: (e?: MouseEvent<HTMLElement> | KeyboardEvent) => void;
   okText?: ReactNode;
-  cancleText?: ReactNode;
+  cancelText?: ReactNode;
   width?: number | string;
   closable?: boolean;
   afterClose?: () => void;
@@ -28,6 +28,7 @@ export interface ModalProps {
   keyboard?: boolean;
   destoryOnClose?: boolean;
   container?: Element;
+  hideCancel?: boolean;
 }
 
 export interface IconHoverProps {
@@ -40,6 +41,7 @@ export interface IconHoverProps {
 export interface MethodModalConfig extends ModalProps {
   icon?: ReactNode;
   content?: ReactNode;
+  isNotice?: boolean;
   noticeType?: 'info' | 'success' | 'warning' | 'error';
 }
 
@@ -50,7 +52,7 @@ export interface MethodModalReturnType {
 
 type ModalMethodType = (config: MethodModalConfig) => MethodModalReturnType;
 export interface MethodModal extends ForwardRefExoticComponent<ModalProps> {
-  confirm: ModalMethodType;
+  show: ModalMethodType;
   info: ModalMethodType;
   success: ModalMethodType;
   warning: ModalMethodType;

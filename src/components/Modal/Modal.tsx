@@ -29,9 +29,9 @@ const InternalModal: ForwardRefRenderFunction<unknown, ModalProps> = (
     visible,
     title,
     onOk,
-    onCancle,
+    onCancel,
     okText = 'OK',
-    cancleText = 'Cancle',
+    cancelText = 'Cancel',
     width,
     closable = true,
     afterClose,
@@ -45,6 +45,7 @@ const InternalModal: ForwardRefRenderFunction<unknown, ModalProps> = (
     keyboard,
     destoryOnClose,
     container = document.body,
+    hideCancel,
     children
   } = props;
 
@@ -71,7 +72,7 @@ const InternalModal: ForwardRefRenderFunction<unknown, ModalProps> = (
     if (!keyboard) return;
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
-        onCancle?.(e);
+        onCancel?.(e);
         if (destoryOnClose) {
           setDestoryChildren(true);
         }
@@ -94,9 +95,11 @@ const InternalModal: ForwardRefRenderFunction<unknown, ModalProps> = (
     } else {
       const footerNode = footer || (
         <div className={`${prefixCls}-footer`} style={footerStyle}>
-          <Button onClick={(e) => handleClose(e, onCancle)}>
-            {cancleText}
-          </Button>
+          {!hideCancel && (
+            <Button onClick={(e) => handleClose(e, onCancel)}>
+              {cancelText}
+            </Button>
+          )}
           <Button type="primary" onClick={(e) => handleClose(e, onOk)}>
             {okText}
           </Button>
@@ -124,7 +127,7 @@ const InternalModal: ForwardRefRenderFunction<unknown, ModalProps> = (
             style={maskStyle}
             onClick={(e) => {
               if (maskClosable) {
-                handleClose(e, onCancle);
+                handleClose(e, onCancel);
               }
             }}
           />
@@ -135,7 +138,7 @@ const InternalModal: ForwardRefRenderFunction<unknown, ModalProps> = (
             {closable && (
               <div
                 className={`${prefixCls}-close-icon`}
-                onClick={(e) => handleClose(e, onCancle)}
+                onClick={(e) => handleClose(e, onCancel)}
               >
                 <IconHover>
                   {closeIcon || <Icon type="AiOutlineClose" size="12px" />}
