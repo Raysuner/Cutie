@@ -54,7 +54,7 @@ export interface MethodModalReturnType {
 type ModalMethodType = (config: MethodModalConfig) => MethodModalReturnType;
 
 export interface MethodType {
-  show: ModalMethodType;
+  normal: ModalMethodType;
   info: ModalMethodType;
   success: ModalMethodType;
   warning: ModalMethodType;

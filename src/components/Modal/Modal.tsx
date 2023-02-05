@@ -162,7 +162,7 @@ const Modal: MethodModal = forwardRef<unknown, ModalProps>(
   InternalModal
 ) as MethodModal;
 
-Modal.show = (config: MethodModalConfig) => {
+Modal.normal = (config: MethodModalConfig) => {
   return method(config);
 };
 
