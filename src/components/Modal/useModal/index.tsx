@@ -50,7 +50,7 @@ function useModal(): [MethodType, ReactElement] {
   }
 
   const modal = {
-    show(config: MethodModalConfig) {
+    normal(config: MethodModalConfig) {
       return addModal(config);
     }
   } as MethodType;
