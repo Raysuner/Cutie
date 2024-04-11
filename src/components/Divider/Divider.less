@@ -25,6 +25,14 @@
       align-items: center;
       border-width: 0;
 
+      &::before {
+        margin-right: 12px;
+      }
+
+      &::after {
+        margin-left: 12px;
+      }
+
       &::before,
       &::after {
         .base-border-bottom-style();
@@ -51,11 +59,8 @@
     }
   }
   &-vertical {
-    min-width: 1px;
-    max-width: 1px;
-    display: inline-block;
-    height: 1em;
-    margin: 0 12px;
+    padding: 0 12px;
+    line-height: 1em;
     vertical-align: middle;
     border-left: 1px solid @divider-border-color;
   }

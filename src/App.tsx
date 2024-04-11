@@ -3,6 +3,7 @@ import Form from './components/Form';
 import Button from './components/Button';
 import Modal from './components/Modal';
 import './App.css';
+import Divider from './components/Divider';
 
 function App() {
   const [visible, setVisible] = useState(false);
@@ -17,6 +18,9 @@ function App() {
         exercitationem laudantium ipsam facilis non impedit saepe ea in qui
         ducimus quibusdam cum!
       </div>
+      <Divider direction="horizontal" textAlign="right">
+        <div>hello world</div>
+      </Divider>
       <div className="lorem">
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia esse
         dolorum aspernatur, officiis inventore, voluptate rerum repellendus
